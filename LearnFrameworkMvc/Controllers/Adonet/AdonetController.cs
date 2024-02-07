@@ -7,7 +7,7 @@ namespace LearnFrameworkMvc.Controllers.Adonet
     {
         public IActionResult Index()
         {
-            string ConString = @"Server=localhost;User=sa;Pwd=admin123;Database=LearnFrameworkMvc;";
+            string ConString = @"Server=localhost;User=sa;Pwd=admin123;Database=LearnFrameworkMvc;TrustServerCertificate=True";
             string querystring = "SELECT * FROM Student";
             
             SqlConnection con = new(ConString);

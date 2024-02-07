@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Table", "Table", "{E15501E1-4B1E-4EE1-9B34-04FA9E7159EE}"
 	ProjectSection(SolutionItems) = preProject
 		Products.sql = Products.sql
+		Student.sql = Student.sql
 	EndProjectSection
 EndProject
 Global
