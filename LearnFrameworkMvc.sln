@@ -15,6 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Table", "Table", "{E15501E1
 		Student.sql = Student.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LearnDupper", "LearnDupper", "{426BB4B9-420D-4D2F-9D04-2A3CF91DEEA1}"
+	ProjectSection(SolutionItems) = preProject
+		LEARN_DUPPER_PRODUCT.sql = LEARN_DUPPER_PRODUCT.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +40,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E15501E1-4B1E-4EE1-9B34-04FA9E7159EE} = {69BE18C4-BCCA-4608-BB7E-55A5DBEF8B54}
+		{426BB4B9-420D-4D2F-9D04-2A3CF91DEEA1} = {69BE18C4-BCCA-4608-BB7E-55A5DBEF8B54}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A06DACB6-7B64-485A-91D6-B67EBB6E0EF8}
