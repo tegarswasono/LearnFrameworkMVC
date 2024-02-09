@@ -1,6 +1,6 @@
-﻿using LearnFrameworkMvc.Models.Core;
+﻿using LearnFrameworkMvc.Web.Models.Core;
 
-namespace LearnFrameworkMvc.ConstantString
+namespace LearnFrameworkMvc.Web.ConstantString
 {
     public static class ModuleFunction
     {

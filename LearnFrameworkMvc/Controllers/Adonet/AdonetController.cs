@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 
-namespace LearnFrameworkMvc.Controllers.Adonet
+namespace LearnFrameworkMvc.Web.Controllers.Adonet
 {
     public class AdonetController : Controller
     {

@@ -1,4 +1,4 @@
-namespace LearnFrameworkMvc.Models
+namespace LearnFrameworkMvc.Web.Models
 {
     public class ErrorViewModel
     {

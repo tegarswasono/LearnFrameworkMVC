@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace LearnFrameworkMvc.Controllers.Dapper
+namespace LearnFrameworkMvc.Web.Controllers.Dapper
 {
     public class HelloDupperController : Controller
     {

@@ -4,7 +4,7 @@ using LearnFrameworkMvc.Module.Repositories;
 using LearnFrameworkMvc.Module.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LearnFrameworkMvc.Controllers.LearnDapper
+namespace LearnFrameworkMvc.Web.Controllers.LearnDapper
 {
     [Route("api/[controller]")]
     [ApiController]

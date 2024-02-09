@@ -1,4 +1,4 @@
-﻿namespace LearnFrameworkMvc.Models.Core
+﻿namespace LearnFrameworkMvc.Web.Models.Core
 {
     public class ModuleFunctionModel
     {

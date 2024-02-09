@@ -1,10 +1,10 @@
-using LearnFrameworkMvc.ConstantString;
-using LearnFrameworkMvc.Models;
-using LearnFrameworkMvc.Models.Core;
+using LearnFrameworkMvc.Web.ConstantString;
+using LearnFrameworkMvc.Web.Models;
+using LearnFrameworkMvc.Web.Models.Core;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace LearnFrameworkMvc.Controllers
+namespace LearnFrameworkMvc.Web.Controllers
 {
     public class HomeController : Controller
     {
