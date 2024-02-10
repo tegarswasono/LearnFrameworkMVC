@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 
-namespace LearnFrameworkMvc.Web.Controllers.Adonet
+namespace LearnFrameworkMvc.Web.Controllers.LearnDapper
 {
     public class AdonetController : Controller
     {
@@ -9,7 +9,7 @@ namespace LearnFrameworkMvc.Web.Controllers.Adonet
         {
             string ConString = @"Server=localhost;User=sa;Pwd=admin123;Database=LearnFrameworkMvc;TrustServerCertificate=True";
             string querystring = "SELECT * FROM Student";
-            
+
             SqlConnection con = new(ConString);
             con.Open();
             SqlCommand cmd = new(querystring, con);

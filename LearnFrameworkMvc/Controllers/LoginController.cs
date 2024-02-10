@@ -6,11 +6,11 @@ using System.Diagnostics;
 
 namespace LearnFrameworkMvc.Web.Controllers
 {
-    public class UsersController : Controller
+    public class HomeController : Controller
     {
-        private readonly ILogger<UsersController> _logger;
+        private readonly ILogger<HomeController> _logger;
 
-        public UsersController(ILogger<UsersController> logger)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
