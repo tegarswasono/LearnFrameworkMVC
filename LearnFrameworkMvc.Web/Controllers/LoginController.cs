@@ -17,24 +17,7 @@ namespace LearnFrameworkMvc.Web.Controllers
 
         public IActionResult Index()
         {
-            var tmp = ModuleFunction.CategoryAdd;
-            var tmp11 = tmp.Split(".")[0];
-            var tmp12 = tmp.Split(".")[1];
-
-            var tmp1 = ModuleFunction.GetAll();
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return PartialView();
         }
     }
 }
