@@ -19,8 +19,8 @@ namespace LearnFrameworkMvc.Module.Models.Master.Role
 	}
 	public class CreateOrUpdateRoleModel
 	{
-		public Guid ID { get; set; }
-		public string NAME { get; set; } = string.Empty;
-		public string DESCRIPTION { get; set; } = string.Empty;
+		public Guid Id { get; set; }
+		public string Name { get; set; } = string.Empty;
+		public string Description { get; set; } = string.Empty;
 	}
 }

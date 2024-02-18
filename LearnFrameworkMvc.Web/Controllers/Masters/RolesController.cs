@@ -32,6 +32,11 @@ namespace LearnFrameworkMvc.Web.Controllers
             return View(result);
         }
 
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            return Ok(await _roleService.ViewById(id));
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateOrUpdate(CreateOrUpdateRoleModel model)
         {

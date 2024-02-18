@@ -12,6 +12,7 @@
     <link rel="icon" type="image/png" href="@Url.Content("~/favicon.png")">
 
     <link href="@Url.Content("~/main.css")" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -193,6 +194,17 @@
     @await RenderSectionAsync("Modal", required: false)
     <script type="text/javascript" src="@Url.Content("~/assets/scripts/main.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/lib/jquery/dist/jquery.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
+    <script type="text/javascript">
+        function ShowMessage(icon, message) {
+            Swal.fire({
+                icon: icon,
+                title: message,
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

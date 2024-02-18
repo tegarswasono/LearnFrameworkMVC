@@ -12,6 +12,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 	public interface IRoleService
 	{
 		List<RoleModel> GetAllData();
+		Task<RoleModel?> ViewById(Guid id);
 		Task CreateOrUpdate(CreateOrUpdateRoleModel model);
 	}
 	public class RoleService : IRoleService
@@ -27,14 +28,19 @@ namespace LearnFrameworkMvc.Module.Services.Master
 			var result = _dbConnection.CreateConnection().Query<RoleModel>("SELECT * FROM TB_M_ROLE").ToList();
 			return result;
 		}
+		public async Task<RoleModel?> ViewById(Guid id)
+		{
+			var param = new { Id = id };
+			return _dbConnection.CreateConnection().QueryAsync<RoleModel>("SELECT TOP 1 * FROM TB_M_ROLE WHERE ID = @Id", param).Result.FirstOrDefault();
+		}
 		public async Task CreateOrUpdate(CreateOrUpdateRoleModel model)
 		{
 			bool isValid = true;
 			string msgError = string.Empty;
 			var param = new DynamicParameters();
-			param.Add("Id", model.ID);
-			param.Add("Name", model.NAME);
-			param.Add("Description", model.DESCRIPTION);
+			param.Add("Id", model.Id);
+			param.Add("Name", model.Name);
+			param.Add("Description", model.Description);
 			param.Add("CreatedBy", "");
 			param.Add("IsValid", isValid, System.Data.DbType.Boolean, System.Data.ParameterDirection.Output);
 			param.Add("MsgError", msgError, System.Data.DbType.String, System.Data.ParameterDirection.Output);

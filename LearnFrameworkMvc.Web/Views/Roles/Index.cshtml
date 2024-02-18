@@ -39,8 +39,8 @@
 							<tr>
 								<th>
 									<i class="fa fa-eye btnView" dataId="@data.ID" style="cursor:pointer" data-toggle="modal" data-target=".modalAdd"></i> &nbsp;
-									<i class="fa fa-edit btnEdit"></i> &nbsp;
-									<i class="fa fa-trash btnDelete"></i>
+									<i class="fa fa-edit btnEdit" dataId="@data.ID" style="cursor:pointer" data-toggle="modal" data-target=".modalAdd"></i> &nbsp;
+									<i class="fa fa-trash btnDelete" dataId="@data.ID" style="cursor:pointer"></i>
 								</th>
 								<td>@data.NAME</td>
 								<td>@data.DESCRIPTION</td>
@@ -64,6 +64,7 @@
 				</div>
 				<form id="formModalAdd" method="POST" action="@Url.Content("~/Roles/CreateOrUpdate")">
 					<div class="modal-body">
+						<input type="text" name="id" value="" style="display:none"/>
 						<div class="position-relative row form-group">
 							<label for="name" class="col-sm-2 col-form-label">Name</label>
 							<div class="col-sm-10"><input name="name" id="name" placeholder="Name" type="text" class="form-control" required="" maxlength="50" ></div>
@@ -74,7 +75,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnClose">Close</button>
 						<button type="submit" class="btn btn-primary" id="btnSave">Save</button>
 					</div>
 				</form>
@@ -88,11 +89,62 @@
 			$('#btnAdd').click(function () {
 				$('#modalAddTitle').text('Add Role');
 				$('#btnSave').show();
+				$("#formModalAdd :input").prop("disabled", false);
+				$("#formModalAdd :input").val('');
 			});
 
 			$('.btnView').click(function () {
 				$('#modalAddTitle').text('View Role');
 				$('#btnSave').hide();
+				$("#formModalAdd :input").prop("disabled", true);
+				$("#btnClose").prop("disabled", false);
+				
+				$.ajax({
+					type: 'GET',
+					url: '@Url.Content("~/Roles/GetById/")' + $(this).attr("dataId"),
+					success: function (data) {
+						$('#name').val(data.name);
+						$('#description').val(data.description);
+					}
+				});
+			});
+
+			$('.btnEdit').click(function () {
+				$('#modalAddTitle').text('Edit Role');
+				$('#btnSave').show();
+				$("#formModalAdd :input").prop("disabled", false);
+
+				let id = $(this).attr("dataId");
+				$('#id').val(id);
+
+				$.ajax({
+					type: 'GET',
+					url: '@Url.Content("~/Roles/GetById/")' + id,
+					success: function (data) {
+						$('#name').val(data.name);
+						$('#description').val(data.description);
+					}
+				});
+			});
+
+			$('.btnDelete').click(function () {
+				Swal.fire({
+					title: "Are you sure want to delete?",
+					showCancelButton: true,
+					confirmButtonText: "Delete",
+				}).then((result) => {
+					if (result.isConfirmed) {
+
+						let id = $(this).attr("dataId");
+						$.ajax({
+							type: 'DELETE',
+							url: '@Url.Content("~/Roles/Delete/")' + id,
+							success: function (data) {
+								
+							}
+						});
+					}
+				});
 			});
 		});
 		$(function(){
@@ -114,6 +166,12 @@
 					}
 				});
 			});
+		});
+		$(function () {
+			
+
+			//ShowMessage("success", "Process Successfully");
+
 		});
 	</script>
 }
