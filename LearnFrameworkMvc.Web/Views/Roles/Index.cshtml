@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Roles";
 }
+@model LearnFrameworkMvc.Module.Models.Master.Role.RoleIndexVM;
 <div class="app-page-title">
     <div class="page-title-wrapper">
         <div class="page-title-heading">
@@ -18,7 +19,101 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-12">
-        <h2>Welcome to roles management</h2>
-    </div>
+	<div class="col-lg-12">
+		<div class="main-card mb-12 card">
+			<div class="card-header">
+				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".modalAdd" id="btnAdd"><i class="fa fa-plus"></i> Add</button>
+			</div>
+			<div class="card-body">
+				<table class="mb-0 table table-hover">
+					<thead>
+						<tr>
+							<th>Action</th>
+							<th>Name</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var data in Model.Data)
+						{
+							<tr>
+								<th>
+									<i class="fa fa-eye btnView" dataId="@data.ID" style="cursor:pointer" data-toggle="modal" data-target=".modalAdd"></i> &nbsp;
+									<i class="fa fa-edit btnEdit"></i> &nbsp;
+									<i class="fa fa-trash btnDelete"></i>
+								</th>
+								<td>@data.NAME</td>
+								<td>@data.DESCRIPTION</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
+@section Modal {
+	<div class="modal fade modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAdd" aria-hidden="true" id="modalAdd">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalAddTitle">Add Role</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form id="formModalAdd" method="POST" action="@Url.Content("~/Roles/CreateOrUpdate")">
+					<div class="modal-body">
+						<div class="position-relative row form-group">
+							<label for="name" class="col-sm-2 col-form-label">Name</label>
+							<div class="col-sm-10"><input name="name" id="name" placeholder="Name" type="text" class="form-control" required="" maxlength="50" ></div>
+						</div>
+						<div class="position-relative row form-group">
+							<label for="description" class="col-sm-2 col-form-label">Description</label>
+							<div class="col-sm-10"><textarea name="description" id="description" class="form-control" placeholder="Description" style="resize:none" required="" maxlength="200"></textarea></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+}
+@section Scripts {
+	<script type="text/javascript">
+		$(function () {
+			$('#btnAdd').click(function () {
+				$('#modalAddTitle').text('Add Role');
+				$('#btnSave').show();
+			});
+
+			$('.btnView').click(function () {
+				$('#modalAddTitle').text('View Role');
+				$('#btnSave').hide();
+			});
+		});
+		$(function(){
+			$('#formModalAdd').submit(function (e) {
+				e.preventDefault();
+
+				let form = $(this);
+				let actionUrl = form.attr('action');
+
+				$.ajax({
+					type: 'POST',
+					url: actionUrl,
+					data: form.serialize(),
+					success: function (data) {
+						alert(data);
+					},
+					error: function (data){
+						alert(data.responseText);
+					}
+				});
+			});
+		});
+	</script>
+}

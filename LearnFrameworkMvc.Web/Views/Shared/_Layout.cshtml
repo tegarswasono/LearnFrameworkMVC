@@ -190,7 +190,9 @@
             </div>
         </div>
     </div>
+    @await RenderSectionAsync("Modal", required: false)
     <script type="text/javascript" src="@Url.Content("~/assets/scripts/main.js")"></script>
-    @* @await RenderSectionAsync("Scripts", required: false) *@
+    <script type="text/javascript" src="@Url.Content("~/lib/jquery/dist/jquery.js")"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

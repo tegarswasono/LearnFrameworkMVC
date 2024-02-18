@@ -32,6 +32,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PRODUCT_CATEGORY", "PRODUCT
 		TB_M_PRODUCT_CATEGORY.sql = TB_M_PRODUCT_CATEGORY.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ROLE", "ROLE", "{7F912BC3-E7E2-41A4-9250-82793DE47598}"
+	ProjectSection(SolutionItems) = preProject
+		TB_M_ROLE.sql = TB_M_ROLE.sql
+		USP_ROLE_CREATE_OR_UPDATE.sql = USP_ROLE_CREATE_OR_UPDATE.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LearnQuery", "LearnQuery", "{C419A169-1EEA-446F-B2D7-3FC5E361F575}"
+	ProjectSection(SolutionItems) = preProject
+		Product.sql = Product.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D9D1B98D-A53F-4E15-B90B-B59307DAC86F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +72,8 @@ Global
 		{A694F24A-CFC2-47E2-ADE3-83F3644BD72E} = {69BE18C4-BCCA-4608-BB7E-55A5DBEF8B54}
 		{AE9AA34D-67B7-4087-8CC6-79DD2807944F} = {A694F24A-CFC2-47E2-ADE3-83F3644BD72E}
 		{DED1FBB7-E0C4-4BA6-93D4-E82659139ACB} = {A694F24A-CFC2-47E2-ADE3-83F3644BD72E}
+		{7F912BC3-E7E2-41A4-9250-82793DE47598} = {A694F24A-CFC2-47E2-ADE3-83F3644BD72E}
+		{C419A169-1EEA-446F-B2D7-3FC5E361F575} = {69BE18C4-BCCA-4608-BB7E-55A5DBEF8B54}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A06DACB6-7B64-485A-91D6-B67EBB6E0EF8}
