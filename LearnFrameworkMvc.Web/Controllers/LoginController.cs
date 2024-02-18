@@ -1,6 +1,4 @@
-using LearnFrameworkMvc.Web.ConstantString;
 using LearnFrameworkMvc.Web.Models;
-using LearnFrameworkMvc.Web.Models.Core;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

@@ -1,6 +1,4 @@
-using LearnFrameworkMvc.Web.ConstantString;
 using LearnFrameworkMvc.Web.Models;
-using LearnFrameworkMvc.Web.Models.Core;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -17,12 +15,6 @@ namespace LearnFrameworkMvc.Web.Controllers
 
         public IActionResult Index()
         {
-            var tmp = ModuleFunction.CategoryAdd;
-            var tmp11 = tmp.Split(".")[0];
-            var tmp12 = tmp.Split(".")[1];
-
-            var tmp1 = ModuleFunction.GetAll();
-
             return View();
         }
 

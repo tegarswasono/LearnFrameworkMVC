@@ -12,11 +12,6 @@ namespace LearnFrameworkMvc.Module.Models.Master.Role
 		public string NAME { get; set; } = string.Empty;
 		public string DESCRIPTION { get; set; } = string.Empty;
 	}
-
-	public class RoleIndexVM
-	{
-		public List<RoleModel> Data { get; set; } = new List<RoleModel>();
-	}
 	public class CreateOrUpdateRoleModel
 	{
 		public Guid Id { get; set; }
