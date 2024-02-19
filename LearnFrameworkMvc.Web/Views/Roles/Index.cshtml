@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Roles";
 }
+@section Css{
+	
+}
 <div class="app-page-title">
     <div class="page-title-wrapper">
         <div class="page-title-heading">
@@ -34,6 +37,15 @@
 					</thead>
 					<tbody></tbody>
 				</table>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+					<label class="form-check-label" for="inlineCheckbox1">Add</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+					<label class="form-check-label" for="inlineCheckbox2">Edit</label>
+				</div>
+				<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"><label class="form-check-label" for="inlineCheckbox2">Delete</label></div>
 			</div>
 		</div>
 	</div>
@@ -59,6 +71,16 @@
 							<label for="description" class="col-sm-2 col-form-label">Description</label>
 							<div class="col-sm-10"><textarea name="description" id="description" class="form-control" placeholder="Description" style="resize:none" required="" maxlength="200"></textarea></div>
 						</div>
+						<table class="table table-bordered table-hover" id="table2">
+							<thead>
+								<tr>
+									<th><input type="checkbox" /></th>
+									<th>Module</th>
+									<th>Function</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnClose">Close</button>
@@ -153,6 +175,8 @@
 				$('#btnSave').show();
 				$("#formModalAdd :input").prop("disabled", false);
 				$("#formModalAdd :input").val('');
+
+				addModuleToTable(1);
 			});
 
 			$('#formModalAdd').submit(function (e) {
@@ -177,5 +201,22 @@
 			});
 
 		});
+
+		function addModuleToTable(roleId){
+			$("#table2 > tbody").html("");
+			$.ajax({
+				type: 'GET',
+				url: '@Url.Content("~/Roles/GetAllModule/")',
+				success: function (data) {
+					$.each(data, function (index, data1) {
+						let functions = '';
+						$.each(data1.functions, function (index, data2) {
+							functions += '<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="' + data2.id + '" value="' + data2.id + '"><label class="form-check-label" for="' + data2.id + '">' + data2.function + '</label></div>';
+						});
+						$('#table2 > tbody:last-child').append('<tr><td><input type="checkbox" /></td><td>' + data1.module + '</td><td>' + functions + '</td></tr>');
+					});
+				}
+			});
+		}
 	</script>
 }

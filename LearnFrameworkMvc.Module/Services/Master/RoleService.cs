@@ -1,5 +1,7 @@
 ﻿using Dapper;
 using LearnFrameworkMvc.Module.Models;
+using LearnFrameworkMvc.Module.Models.Core;
+using LearnFrameworkMvc.Module.Models.Master.Function;
 using LearnFrameworkMvc.Module.Models.Master.Role;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 		Task<List<RoleModel>> AllData(string sortColumn, string sortColumnDirection, int skip, int pageSize);
 		Task<int> CountAllData();
 		Task<RoleModel?> ViewById(Guid id);
+		Task<List<FunctionModel>> GetAllModuleFunction(Guid? roleId);
 		Task CreateOrUpdate(CreateOrUpdateRoleModel model);
 		Task DeleteById(Guid id);
 	}
@@ -59,6 +62,21 @@ namespace LearnFrameworkMvc.Module.Services.Master
 				string query = "SELECT TOP 1 * FROM TB_M_ROLE WHERE ID = @Id";
 				var result = await _dbConnection.CreateConnection().QueryAsync<RoleModel>(query, param);
 				return result.FirstOrDefault();
+			}
+			catch (Exception ex)
+			{
+				throw new InvalidOperationException(ex.Message);
+			}
+		}
+
+		public async Task<List<FunctionModel>> GetAllModuleFunction(Guid? roleId)
+		{
+			try
+			{
+				var param = new { roleId };
+				string query = "SELECT * FROM TB_M_FUNCTION;";
+				var result = await _dbConnection.CreateConnection().QueryAsync<FunctionModel>(query, param);
+				return result.ToList();
 			}
 			catch (Exception ex)
 			{

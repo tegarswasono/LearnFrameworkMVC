@@ -4,6 +4,8 @@ using LearnFrameworkMvc.Module.Services;
 using LearnFrameworkMvc.Module.Services.Master;
 using Microsoft.AspNetCore.Mvc;
 using LearnFrameworkMvc.Module;
+using LearnFrameworkMvc.Module.Models.Core;
+using LearnFrameworkMvc.Module.Models.Master.Function;
 
 namespace LearnFrameworkMvc.Web.Controllers
 {
@@ -65,6 +67,19 @@ namespace LearnFrameworkMvc.Web.Controllers
 				return Json(returnObj);
 			}
 			catch (Exception)
+			{
+				return Json(null);
+			}
+		}
+
+		public async Task<JsonResult> GetAllModule(Guid? roleId)
+		{
+			try
+			{
+				List<FunctionModel> moduleFunctionModels = await _roleService.GetAllModuleFunction(roleId);
+				var result = FunctionVM.Dto(moduleFunctionModels);
+				return Json(result);
+			}catch (Exception) 
 			{
 				return Json(null);
 			}
