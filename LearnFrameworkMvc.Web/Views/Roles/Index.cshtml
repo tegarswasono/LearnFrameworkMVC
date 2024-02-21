@@ -27,7 +27,7 @@
 				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".modalAdd" id="btnAdd"><i class="fa fa-plus"></i> Add</button>
 			</div>
 			<div class="card-body">
-				<table class="display" id="table1" style="width:100%">
+				<table class="display table table-bordered table-hover" id="table1" style="width:100%">
 					<thead>
 						<tr>
 							<th>Action</th>
@@ -37,15 +37,6 @@
 					</thead>
 					<tbody></tbody>
 				</table>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-					<label class="form-check-label" for="inlineCheckbox1">Add</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-					<label class="form-check-label" for="inlineCheckbox2">Edit</label>
-				</div>
-				<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"><label class="form-check-label" for="inlineCheckbox2">Delete</label></div>
 			</div>
 		</div>
 	</div>
@@ -60,7 +51,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="formModalAdd" method="POST" action="@Url.Content("~/Roles/CreateOrUpdate")">
+				<form id="form1" method="POST" action="@Url.Content("~/Roles/CreateOrUpdate")">
 					<div class="modal-body">
 						<input type="hidden" name="id" id="id" value="" style="display: none" />
 						<div class="position-relative row form-group">
@@ -74,7 +65,7 @@
 						<table class="table table-bordered table-hover" id="table2">
 							<thead>
 								<tr>
-									<th><input type="checkbox" /></th>
+									<th><input type="checkbox" id="checkboxAll" /></th>
 									<th>Module</th>
 									<th>Function</th>
 								</tr>
@@ -116,7 +107,7 @@
 
 				$('#modalAddTitle').text('View Role');
 				$('#btnSave').hide();
-				$("#formModalAdd :input").prop("disabled", true);
+				$("#form1 :input").prop("disabled", true);
 				$("#btnClose").prop("disabled", false);
 
 				$.ajax({
@@ -127,6 +118,7 @@
 						$('#description').val(data.description);
 					}
 				});
+				addModuleToTable(id, true);
 			});
 
 			$('#table1 tbody').on('click', '.btnEdit', function () {
@@ -135,7 +127,7 @@
 
 				$('#modalAddTitle').text('Edit Role');
 				$('#btnSave').show();
-				$("#formModalAdd :input").prop("disabled", false);
+				$("#form1 :input").prop("disabled", false);
 
 				$.ajax({
 					type: 'GET',
@@ -146,6 +138,7 @@
 						$('#description').val(data.description);
 					}
 				});
+				addModuleToTable(id);
 			});
 
 			$('#table1 tbody').on('click', '.btnDelete', function () {
@@ -163,6 +156,7 @@
 							type: 'DELETE',
 							url: '@Url.Content("~/Roles/Delete/")' + id,
 							success: function (data) {
+								ShowMessage("success", data);
 								table.ajax.reload();
 							}
 						});
@@ -173,13 +167,13 @@
 			$('#btnAdd').click(function () {
 				$('#modalAddTitle').text('Add Role');
 				$('#btnSave').show();
-				$("#formModalAdd :input").prop("disabled", false);
-				$("#formModalAdd :input").val('');
+				$("#form1 :input").prop("disabled", false);
+				$("#form1 :input").val('');
 
-				addModuleToTable(1);
+				addModuleToTable(null);
 			});
 
-			$('#formModalAdd').submit(function (e) {
+			$('#form1').submit(function (e) {
 				e.preventDefault();
 
 				let form = $(this);
@@ -200,21 +194,44 @@
 				});
 			});
 
+			$('#table2 #checkboxAll').change(function () {
+				if (this.checked) {
+					$('#table2 tbody input[type="checkbox"]').prop('checked', true);
+				} else {
+					$('#table2 tbody input[type="checkbox"]').prop('checked', false);
+				}
+			});
+			$(document).on('click', '#table2 .checkboxModule', function () {
+				var moduleName = $(this).attr("moduleName");
+				let selector1 = '#table2 tbody input[type="checkbox"].' + moduleName;
+				if (this.checked) {
+					$(selector1).prop('checked', true);
+				} else {
+					$(selector1).prop('checked', false);
+				}
+			});
+
+
+
 		});
 
-		function addModuleToTable(roleId){
-			$("#table2 > tbody").html("");
+		function addModuleToTable(roleId, isView = false){
+			$("#table2 tbody").html("");
 			$.ajax({
 				type: 'GET',
-				url: '@Url.Content("~/Roles/GetAllModule/")',
+				url: '@Url.Content("~/Roles/GetAllModule/")' + roleId,
 				success: function (data) {
 					$.each(data, function (index, data1) {
 						let functions = '';
 						$.each(data1.functions, function (index, data2) {
-							functions += '<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="' + data2.id + '" value="' + data2.id + '"><label class="form-check-label" for="' + data2.id + '">' + data2.function + '</label></div>';
+							functions += '<div class="form-check form-check-inline"><input class="form-check-input ' + data1.module + '" name="' + data2.id + '" type="checkbox" id="' + data2.id + '" value="' + data2.id + '"><label class="form-check-label" for="' + data2.id + '">' + data2.function + '</label></div>';
 						});
-						$('#table2 > tbody:last-child').append('<tr><td><input type="checkbox" /></td><td>' + data1.module + '</td><td>' + functions + '</td></tr>');
+						$('#table2 tbody:last-child').append('<tr><td><input type="checkbox" class="checkboxModule" moduleName="'+ data1.module +'" /></td><td>' + data1.module + '</td><td>' + functions + '</td></tr>');
 					});
+					if(isView){
+						$("#form1 :input").prop("disabled", true);
+						$("#btnClose").prop("disabled", false);
+					}
 				}
 			});
 		}
