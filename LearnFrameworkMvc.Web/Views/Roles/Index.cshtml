@@ -1,9 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Roles";
 }
-@section Css{
-	
-}
 <div class="app-page-title">
     <div class="page-title-wrapper">
         <div class="page-title-heading">
@@ -24,7 +21,7 @@
 	<div class="col-lg-12">
 		<div class="main-card mb-12 card">
 			<div class="card-header">
-				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".modalAdd" id="btnAdd"><i class="fa fa-plus"></i> Add</button>
+				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal1" id="btnAdd"><i class="fa fa-plus"></i> Add</button>
 			</div>
 			<div class="card-body">
 				<table class="display table table-bordered table-hover" id="table1" style="width:100%">
@@ -42,11 +39,11 @@
 	</div>
 </div>
 @section Modal {
-	<div class="modal fade modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAdd" aria-hidden="true" id="modalAdd">
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true" id="modal1">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="modalAddTitle">Add Role</h5>
+					<h5 class="modal-title" id="modal1Title">Add Role</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -95,7 +92,7 @@
 				filter: false,
 				order: [[1, 'asc']],
 				columns: [
-					{ defaultContent: '<i class="fa fa-eye btnView" style="cursor:pointer" data-toggle="modal" data-target=".modalAdd"></i> &nbsp; <i class="fa fa-edit btnEdit" style="cursor:pointer" data-toggle="modal" data-target=".modalAdd"></i> &nbsp; <i class="fa fa-trash btnDelete" style="cursor:pointer"></i>' },
+					{ defaultContent: '<i class="fa fa-eye btnView" style="cursor:pointer" data-toggle="modal" data-target="#modal1"></i> &nbsp; <i class="fa fa-edit btnEdit" style="cursor:pointer" data-toggle="modal" data-target="#modal1"></i> &nbsp; <i class="fa fa-trash btnDelete" style="cursor:pointer"></i>' },
 					{ data: "name", name: "name" },
 					{ data: "description", name: "description" }
 				]
@@ -105,7 +102,7 @@
 				var row = $(this).closest('tr');
 				var id = table.row(row).data()["id"];
 
-				$('#modalAddTitle').text('View Role');
+				$('#modal1Title').text('View Role');
 				$('#btnSave').hide();
 				$("#form1 :input").prop("disabled", true);
 				$("#btnClose").prop("disabled", false);
@@ -125,7 +122,7 @@
 				var row = $(this).closest('tr');
 				var id = table.row(row).data()["id"];
 
-				$('#modalAddTitle').text('Edit Role');
+				$('#modal1Title').text('Edit Role');
 				$('#btnSave').show();
 				$("#form1 :input").prop("disabled", false);
 
@@ -165,7 +162,7 @@
 			});
 
 			$('#btnAdd').click(function () {
-				$('#modalAddTitle').text('Add Role');
+				$('#modal1Title').text('Add Role');
 				$('#btnSave').show();
 				$("#form1 :input").prop("disabled", false);
 				$("#form1 :input").val('');

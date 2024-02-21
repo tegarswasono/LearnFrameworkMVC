@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IDapperDbConnection, DapperDbConnection>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
