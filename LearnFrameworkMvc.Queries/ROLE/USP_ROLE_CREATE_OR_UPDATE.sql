@@ -3,6 +3,7 @@ CREATE OR ALTER PROCEDURE USP_ROLE_CREATE_OR_UPDATE
 @Id			uniqueidentifier
 ,@Name			varchar(50)
 ,@Description	varchar(200)
+,@Functions		varchar(max)
 ,@CreatedBy		varchar(50)
 ,@IsValid		BIT OUTPUT
 ,@MsgError		VARCHAR(MAX) OUTPUT
@@ -30,6 +31,13 @@ BEGIN
 			UPDATE TB_M_ROLE
 			SET NAME = @Name, DESCRIPTION = @Description
 			WHERE ID = @Id
+
+			DELETE TB_M_ROLE_FUNCTION WHERE ROLE_ID = @Id
+			INSERT INTO TB_M_ROLE_FUNCTION(ROLE_ID, FUNCTION_ID)
+			SELECT 
+				@Id,
+				trim(value)
+			FROM STRING_SPLIT(@Functions, ',');
 		END
 	END
 	ELSE
@@ -42,7 +50,13 @@ BEGIN
 		END
 		ELSE
 		BEGIN
-			INSERT INTO TB_M_ROLE VALUES(NEWID(), @Name, @Description);
+			SET @Id = NEWID();
+			INSERT INTO TB_M_ROLE VALUES(@Id, @Name, @Description);
+			INSERT INTO TB_M_ROLE_FUNCTION(ROLE_ID, FUNCTION_ID)
+			SELECT 
+				@Id,
+				trim(value)
+			FROM STRING_SPLIT(@Functions, ',');
 		END
 	END
 END

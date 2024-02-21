@@ -74,7 +74,17 @@ namespace LearnFrameworkMvc.Module.Services.Master
 			try
 			{
 				var param = new { roleId };
-				string query = "SELECT * FROM TB_M_FUNCTION ORDER BY [ORDER];";
+				string query = @"SELECT * FROM TB_M_FUNCTION ORDER BY [ORDER];";
+				if (roleId != null && roleId != Guid.Empty)
+				{
+					query = @"SELECT 
+								A.*, 
+								ISCHECKED = 
+									CASE WHEN EXISTS(SELECT TOP 1 1 FROM TB_M_ROLE_FUNCTION WHERE ROLE_ID = @roleId AND FUNCTION_ID = A.ID) 
+									THEN 1 ELSE 0 END
+							FROM TB_M_FUNCTION A ORDER BY [ORDER];
+							";
+				}
 				var result = await _dbConnection.CreateConnection().QueryAsync<FunctionModel>(query, param);
 				return result.ToList();
 			}
@@ -93,6 +103,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 				param.Add("Id", model.Id);
 				param.Add("Name", model.Name);
 				param.Add("Description", model.Description);
+				param.Add("Functions", model.Functions);
 				param.Add("CreatedBy", "");
 				param.Add("IsValid", isValid, System.Data.DbType.Boolean, System.Data.ParameterDirection.Output);
 				param.Add("MsgError", msgError, System.Data.DbType.String, System.Data.ParameterDirection.Output);
@@ -116,7 +127,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 			try
 			{
 				var param = new { id };
-				string query = "DELETE TB_M_ROLE WHERE ID = @id";
+				string query = "DELETE TB_M_ROLE_FUNCTION WHERE ROLE_ID = @id;DELETE TB_M_ROLE WHERE ID = @id";
 				var result = await _dbConnection.CreateConnection().ExecuteAsync(query, param);
 				if (result == 0)
 				{
