@@ -3,6 +3,7 @@ using LearnFrameworkMvc.Module.Models;
 using LearnFrameworkMvc.Module.Models.Core;
 using LearnFrameworkMvc.Module.Models.Master.Function;
 using LearnFrameworkMvc.Module.Models.Master.Role;
+using LearnFrameworkMvc.Module.Models.Master.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 {
 	public interface IUserService
 	{
-		Task<List<RoleModel>> AllData(string sortColumn, string sortColumnDirection, int skip, int pageSize);
+		Task<List<UserModel>> AllData(string sortColumn, string sortColumnDirection, int skip, int pageSize);
 		Task<int> CountAllData();
 		Task<RoleModel?> ViewById(Guid id);
 		Task<List<FunctionModel>> GetAllModuleFunction(Guid? roleId);
@@ -28,13 +29,13 @@ namespace LearnFrameworkMvc.Module.Services.Master
 			_dbConnection = dbConnection;
 		}
 
-		public async Task<List<RoleModel>> AllData(string sortColumn, string sortColumnDirection, int skip, int pageSize)
+		public async Task<List<UserModel>> AllData(string sortColumn, string sortColumnDirection, int skip, int pageSize)
 		{
 			try
 			{
 				var param = new { skip, pageSize };
-				string query = $"SELECT * FROM TB_M_ROLE ORDER BY {sortColumn} {sortColumnDirection} OFFSET @skip ROWS FETCH NEXT @pageSize ROWS ONLY;";
-				var result = await _dbConnection.CreateConnection().QueryAsync<RoleModel>(query, param);
+				string query = $"SELECT ID, USERNAME, EMAIL, FULLNAME, TELP1, DESCRIPTION, IS_ACTIVE FROM TB_M_USER ORDER BY {sortColumn} {sortColumnDirection} OFFSET @skip ROWS FETCH NEXT @pageSize ROWS ONLY;";
+                var result = await _dbConnection.CreateConnection().QueryAsync<UserModel>(query, param);
 				return result.ToList();
 			}
 			catch (Exception ex)
@@ -46,7 +47,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 		{
 			try
 			{
-				var result = await _dbConnection.CreateConnection().QueryAsync<int>("SELECT COUNT(1) FROM TB_M_ROLE");
+				var result = await _dbConnection.CreateConnection().QueryAsync<int>("SELECT COUNT(1) FROM TB_M_USER");
 				return result.FirstOrDefault();
 			}
 			catch (Exception ex)

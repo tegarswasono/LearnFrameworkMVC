@@ -28,7 +28,7 @@
                     <thead>
                         <tr>
                             <th>Action</th>
-                            <th>Name</th>
+                            <th>Fullname</th>
                             <th>Username</th>
                             <th>Email</th>
                             <th>Telp</th>
@@ -41,3 +41,155 @@
         </div>
     </div>
 </div>
+@section Modal {
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true" id="modal1">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modal1Title">Add Role</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form id="form1" method="POST" action="@Url.Content("~/Roles/CreateOrUpdate")">
+					<div class="modal-body">
+						<input type="hidden" name="id" id="id" value="" style="display: none" />
+						<div class="position-relative row form-group">
+							<label for="name" class="col-sm-2 col-form-label">Name</label>
+							<div class="col-sm-10"><input name="name" id="name" placeholder="Name" type="text" class="form-control" required="" maxlength="50"></div>
+						</div>
+						<div class="position-relative row form-group">
+							<label for="description" class="col-sm-2 col-form-label">Description</label>
+							<div class="col-sm-10"><textarea name="description" id="description" class="form-control" placeholder="Description" style="resize:none" required="" maxlength="200"></textarea></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnClose">Close</button>
+						<button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+}
+@section Scripts {
+	<script type="text/javascript">
+		$(function () {
+			var table = $('#table1').DataTable({
+				ajax: {
+					url: "Users/GetAllData",
+					type: "POST",
+				},
+				processing: true,
+				serverSide: true,
+				filter: false,
+				order: [[1, 'asc']],
+				columns: [
+					{ defaultContent: '<i class="fa fa-eye btnView" style="cursor:pointer" data-toggle="modal" data-target="#modal1"></i> &nbsp; <i class="fa fa-edit btnEdit" style="cursor:pointer" data-toggle="modal" data-target="#modal1"></i> &nbsp; <i class="fa fa-trash btnDelete" style="cursor:pointer"></i>' },
+					{ data: "fullname", name: "fullname" },
+					{ data: "username", name: "username" },
+					{ data: "email", name: "email" },
+					{ data: "telP1", name: "telP1" },
+					{ data: "iS_ACTIVE", name: "iS_ACTIVE" }
+				]
+			});
+
+			$('#table1 tbody').on('click', '.btnView', function () {
+				var row = $(this).closest('tr');
+				var id = table.row(row).data()["id"];
+
+				$('#modal1Title').text('View Role');
+				$('#btnSave').hide();
+				$("#form1 :input").prop("disabled", true);
+				$("#btnClose").prop("disabled", false);
+
+				$.ajax({
+					type: 'GET',
+					url: '@Url.Content("~/Users/GetById/")' + id,
+					success: function (data) {
+						$('#name').val(data.name);
+						$('#description').val(data.description);
+					}
+				});
+			});
+
+			$('#table1 tbody').on('click', '.btnEdit', function () {
+				var row = $(this).closest('tr');
+				var id = table.row(row).data()["id"];
+
+				$('#modal1Title').text('Edit Role');
+				$('#btnSave').show();
+				$("#form1 :input").prop("disabled", false);
+
+				$.ajax({
+					type: 'GET',
+					url: '@Url.Content("~/Users/GetById/")' + id,
+					success: function (data) {
+						$('#id').val(data.id);
+						$('#name').val(data.name);
+						$('#description').val(data.description);
+					}
+				});
+			});
+
+			$('#table1 tbody').on('click', '.btnDelete', function () {
+				var row = $(this).closest('tr');
+				var id = table.row(row).data()["id"];
+
+				Swal.fire({
+					title: "Are you sure want to delete?",
+					showCancelButton: true,
+					confirmButtonText: "Delete",
+				}).then((result) => {
+					if (result.isConfirmed) {
+
+						$.ajax({
+							type: 'DELETE',
+							url: '@Url.Content("~/Users/Delete/")' + id,
+							success: function (data) {
+								ShowMessage("success", data);
+								table.ajax.reload();
+							}
+						});
+					}
+				});
+			});
+
+			$('#btnAdd').click(function () {
+				$('#modal1Title').text('Add Role');
+				$('#btnSave').show();
+				$("#form1 :input").prop("disabled", false);
+				$("#form1 :input").val('');
+			});
+
+			$('#form1').submit(function (e) {
+				e.preventDefault();
+
+				let form = $(this);
+				let actionUrl = form.attr('action');
+				let formFinal = form.serialize();
+
+				var array = [];
+				var checkboxes = $('#table2 tbody input[type=checkbox][name=ModuleFunction]:checked');
+				for (var i = 0; i < checkboxes.length; i++) {
+					array.push(checkboxes[i].value);
+				}
+				formFinal += "&Functions=" + array;
+
+				$.ajax({
+					type: 'POST',
+					url: actionUrl,
+					data: formFinal,
+					success: function (data) {
+						ShowMessage("success", data);
+						$("#btnClose").click();
+						table.ajax.reload();
+					},
+					error: function (data) {
+						ShowMessage("error", data.responseText);
+					}
+				});
+			});
+		});
+	</script>
+}

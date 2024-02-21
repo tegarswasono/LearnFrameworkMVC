@@ -1,17 +1,19 @@
 ﻿@{
-    ViewData["Title"] = "Product";
+    string title = "Products";
+    string icon = "pe-7s-display2";
+    ViewData["Title"] = title;
 }
 <div class="app-page-title">
     <div class="page-title-wrapper">
         <div class="page-title-heading">
             <div class="page-title-icon">
-                <i class="pe-7s-config icon-gradient bg-tempting-azure">
+                <i class="@icon icon-gradient bg-tempting-azure">
                 </i>
             </div>
             <div>
-                Products
+                @title
                 <div class="page-title-subheading">
-                    <a title="Home" href="@Url.Content("~/Home")">Home</a> / Products
+                    <a title="Home" href="@Url.Content("~/Home")">Home</a> / @title
                 </div>
             </div>
         </div>
@@ -19,6 +21,6 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <h2>Welcome to products management</h2>
+        <h2>@title</h2>
     </div>
 </div>
