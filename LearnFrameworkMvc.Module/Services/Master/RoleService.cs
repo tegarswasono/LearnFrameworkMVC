@@ -74,7 +74,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 			try
 			{
 				var param = new { roleId };
-				string query = "SELECT * FROM TB_M_FUNCTION;";
+				string query = "SELECT * FROM TB_M_FUNCTION ORDER BY [ORDER];";
 				var result = await _dbConnection.CreateConnection().QueryAsync<FunctionModel>(query, param);
 				return result.ToList();
 			}

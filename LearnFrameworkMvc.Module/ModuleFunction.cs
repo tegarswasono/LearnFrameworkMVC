@@ -6,17 +6,20 @@ namespace LearnFrameworkMvc.Module
     {
         public static List<ModuleFunctionModel> GetAll()
         {
-            #pragma warning disable CS8601 // Possible null reference assignment.
+#pragma warning disable CS8601 // Possible null reference assignment.
+
+            int a = 1;
             var result = typeof(ModuleFunction)
                 .GetFields()
                 .Select(x => new ModuleFunctionModel 
                 { 
-                    Name = x.Name, 
-                    Value = x.GetValue(null)?.ToString(),
+                    Id = x.Name, 
+                    IdText = x.GetValue(null)?.ToString(),
                     Module = x.GetValue(null)?.ToString()?.Split(".")[0],
-                    Function = x.GetValue(null)?.ToString()?.Split(".")[1]
+                    FunctionName = x.GetValue(null)?.ToString()?.Split(".")[1],
+                    Order = a++
                 }).ToList();
-            #pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning restore CS8601 // Possible null reference assignment.
             return result;
         }
 

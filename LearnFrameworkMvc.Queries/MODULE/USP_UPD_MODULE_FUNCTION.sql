@@ -5,18 +5,20 @@ AS
 BEGIN
 	DECLARE @NOW DATETIME = GETDATE()
 	DECLARE @TEMP TABLE(
-		NAME VARCHAR(50) NOT NULL,
-		VALUE VARCHAR(50) NOT NULL,
+		ID VARCHAR(50) NOT NULL,
+		IDTEXT VARCHAR(50) NOT NULL,
 		MODULE VARCHAR(50) NOT NULL,
-		[FUNCTION] VARCHAR(50) NOT NULL
+		FUNCTION_NAME VARCHAR(50) NOT NULL,
+		[ORDER] INT NOT NULL
 	)
 
-	INSERT INTO @TEMP(NAME, VALUE, MODULE, [FUNCTION])
+	INSERT INTO @TEMP(ID, IDTEXT, MODULE, FUNCTION_NAME, [ORDER])
 	SELECT 
-		JSON_Value (A.value, '$.Name'),
-		JSON_Value (A.value, '$.Value'),
+		JSON_Value (A.value, '$.Id'),
+		JSON_Value (A.value, '$.IdText'),
 		JSON_Value (A.value, '$.Module'),
-		JSON_Value (A.value, '$.Function')
+		JSON_Value (A.value, '$.FunctionName'),
+		JSON_Value (A.value, '$.Order')
 	FROM OPENJSON(@DATA) AS A 
 
 	DELETE TB_M_FUNCTION
@@ -36,10 +38,11 @@ BEGIN
 
 	INSERT INTO TB_M_FUNCTION
 	SELECT 
-	[VALUE],
+	[ID],
 	MODULE,
-	[FUNCTION],
-	'',
+	[FUNCTION_NAME],
+	[IDTEXT],
+	[ORDER],
 
 	@NOW,
 	@BY,
