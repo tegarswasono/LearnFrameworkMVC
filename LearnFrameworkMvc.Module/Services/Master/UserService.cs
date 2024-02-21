@@ -16,9 +16,9 @@ namespace LearnFrameworkMvc.Module.Services.Master
 	{
 		Task<List<UserModel>> AllData(string sortColumn, string sortColumnDirection, int skip, int pageSize);
 		Task<int> CountAllData();
-		Task<RoleModel?> ViewById(Guid id);
+		Task<UserModel?> ViewById(Guid id);
 		Task<List<FunctionModel>> GetAllModuleFunction(Guid? roleId);
-		Task CreateOrUpdate(CreateOrUpdateRoleModel model);
+		Task CreateOrUpdate(CreateOrUpdateUserModel model);
 		Task DeleteById(Guid id);
 	}
 	public class UserService : IUserService
@@ -55,13 +55,13 @@ namespace LearnFrameworkMvc.Module.Services.Master
 				throw new InvalidOperationException(ex.Message);
 			}
 		}
-		public async Task<RoleModel?> ViewById(Guid id)
+		public async Task<UserModel?> ViewById(Guid id)
 		{
 			try
 			{
 				var param = new { Id = id };
-				string query = "SELECT TOP 1 * FROM TB_M_ROLE WHERE ID = @Id";
-				var result = await _dbConnection.CreateConnection().QueryAsync<RoleModel>(query, param);
+				string query = "SELECT TOP 1 * FROM TB_M_USER WHERE ID = @Id";
+				var result = await _dbConnection.CreateConnection().QueryAsync<UserModel>(query, param);
 				return result.FirstOrDefault();
 			}
 			catch (Exception ex)
@@ -94,7 +94,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 				throw new InvalidOperationException(ex.Message);
 			}
 		}
-		public async Task CreateOrUpdate(CreateOrUpdateRoleModel model)
+		public async Task CreateOrUpdate(CreateOrUpdateUserModel model)
 		{
 			try
 			{
@@ -102,14 +102,17 @@ namespace LearnFrameworkMvc.Module.Services.Master
 				string msgError = string.Empty;
 				var param = new DynamicParameters();
 				param.Add("Id", model.Id);
-				param.Add("Name", model.Name);
+				param.Add("Fullname", model.Fullname);
+				param.Add("Username", model.Username);
+				param.Add("Email", model.Email);
+				param.Add("Telp1", model.Telp1);
 				param.Add("Description", model.Description);
-				param.Add("Functions", model.Functions);
+				param.Add("Is_Active", model.IsActive);
 				param.Add("CreatedBy", "");
 				param.Add("IsValid", isValid, System.Data.DbType.Boolean, System.Data.ParameterDirection.Output);
 				param.Add("MsgError", msgError, System.Data.DbType.String, System.Data.ParameterDirection.Output);
 
-				await _dbConnection.CreateConnection().QueryAsync("USP_ROLE_CREATE_OR_UPDATE", param, commandType: System.Data.CommandType.StoredProcedure);
+				await _dbConnection.CreateConnection().QueryAsync("USP_USER_CREATE_OR_UPDATE", param, commandType: System.Data.CommandType.StoredProcedure);
 				isValid = param.Get<bool>("IsValid");
 				msgError = param.Get<string>("MsgError");
 

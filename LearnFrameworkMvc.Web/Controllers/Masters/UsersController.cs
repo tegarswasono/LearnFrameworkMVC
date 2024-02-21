@@ -1,7 +1,10 @@
+using LearnFrameworkMvc.Module.Models.Master.Role;
+using LearnFrameworkMvc.Module;
 using LearnFrameworkMvc.Module.Services.Master;
 using LearnFrameworkMvc.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using LearnFrameworkMvc.Module.Models.Master.User;
 
 namespace LearnFrameworkMvc.Web.Controllers
 {
@@ -58,5 +61,43 @@ namespace LearnFrameworkMvc.Web.Controllers
                 return Json(null);
             }
         }
-    }
+		public async Task<IActionResult> GetById(Guid id)
+		{
+			try
+			{
+				return Ok(await _userService.ViewById(id));
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
+		[HttpPost]
+		public async Task<IActionResult> CreateOrUpdate(CreateOrUpdateUserModel model)
+		{
+			try
+			{
+				await _userService.CreateOrUpdate(model);
+				return Ok(ConstantString.ProcessSuccessfully);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
+
+		[HttpDelete]
+		public async Task<IActionResult> Delete(Guid id)
+		{
+			try
+			{
+				await _userService.DeleteById(id);
+				return Ok(ConstantString.DeleteSuccessfully);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.ToString());
+			}
+		}
+	}
 }

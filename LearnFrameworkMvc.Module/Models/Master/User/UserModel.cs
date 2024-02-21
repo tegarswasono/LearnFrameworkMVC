@@ -8,12 +8,22 @@ namespace LearnFrameworkMvc.Module.Models.Master.User
 {
     public class UserModel
     {
-        public Guid ID { get; set; }
-        public string FULLNAME { get; set; } = string.Empty;
-        public string USERNAME { get; set; } = string.Empty;
-        public string EMAIL { get; set; } = string.Empty;
-        public string TELP1 { get; set; } = string.Empty;
-        public string DESCRIPTION { get; set; } = string.Empty;
-        public bool IS_ACTIVE { get; set; }
+        public Guid Id { get; set; }
+        public string Fullname { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Telp1 { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public bool Is_Active { get; set; }
     }
+	public class CreateOrUpdateUserModel
+	{
+		public Guid Id { get; set; }
+		public string Fullname { get; set; } = string.Empty;
+		public string Username { get; set; } = string.Empty;
+		public string Email { get; set; } = string.Empty;
+		public string Telp1 { get; set; } = string.Empty;
+		public string Description { get; set; } = string.Empty;
+		public bool IsActive { get; set; }
+	}
 }
