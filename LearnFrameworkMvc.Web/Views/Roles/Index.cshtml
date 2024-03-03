@@ -155,6 +155,9 @@
 							success: function (data) {
 								ShowMessage("success", data);
 								table.ajax.reload();
+							},
+							error: function (data) {
+								ShowMessage("error", data.responseText);
 							}
 						});
 					}

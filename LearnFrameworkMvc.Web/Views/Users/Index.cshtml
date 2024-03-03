@@ -183,6 +183,9 @@
 							success: function (data) {
 								ShowMessage("success", data);
 								table.ajax.reload();
+							},
+							error: function (data) {
+								ShowMessage("error", data.responseText);
 							}
 						});
 					}
@@ -194,7 +197,8 @@
 				$('#btnSave').show();
 				$("#form1 :input").prop("disabled", false);
 				$("#form1 :input").val('');
-				$('#isActive').prop("checked", false);
+				$('#isActive').prop("checked", true);
+				$('#isActive').val("true");
 			});
 
 			$('#form1').submit(function (e) {

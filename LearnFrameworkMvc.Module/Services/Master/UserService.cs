@@ -131,7 +131,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 			try
 			{
 				var param = new { id };
-				string query = "DELETE TB_M_ROLE_FUNCTION WHERE ROLE_ID = @id;DELETE TB_M_ROLE WHERE ID = @id";
+				string query = "DELETE TB_M_USER_ROLE WHERE USER_ID = @id;DELETE TB_M_USER WHERE ID = @id";
 				var result = await _dbConnection.CreateConnection().ExecuteAsync(query, param);
 				if (result == 0)
 				{

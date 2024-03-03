@@ -121,7 +121,7 @@ namespace LearnFrameworkMvc.Web.Controllers
 			}
 			catch (Exception ex)
 			{
-				return BadRequest(ex.ToString());
+				return BadRequest(ex.Message);
 			}
         }
     }
