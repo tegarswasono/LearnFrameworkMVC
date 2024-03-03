@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace LearnFrameworkMvc.Web.Controllers
 {
-    public class TransactionsController : Controller
+    public class BookingsController : Controller
     {
-        private readonly ILogger<TransactionsController> _logger;
+        private readonly ILogger<BookingsController> _logger;
 
-        public TransactionsController(ILogger<TransactionsController> logger)
+        public BookingsController(ILogger<BookingsController> logger)
         {
             _logger = logger;
         }
