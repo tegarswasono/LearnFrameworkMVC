@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LearnFrameworkMvc.Module.Models
 {
-	public class BaseActionIdentity
+	public class BaseIdentity
 	{
 		public DateTime CREATED_AT { get; set; }
 		public string CREATED_BY { get; set; } = string.Empty;

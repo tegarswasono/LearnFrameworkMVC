@@ -61,6 +61,17 @@ namespace LearnFrameworkMvc.Web.Controllers
                 return Json(null);
             }
         }
+        public async Task<JsonResult> GetRoles(Guid? userId)
+        {
+            try
+            {
+                var result = await _userService.GetRoles(userId);
+                return Json(result);
+            }catch(Exception)
+            {
+                return Json(null);
+            }
+        }
 		public async Task<IActionResult> GetById(Guid id)
 		{
 			try

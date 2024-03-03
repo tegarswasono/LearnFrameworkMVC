@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LearnFrameworkMvc.Module.Models
 {
-	public class ExecuteSPDefaultModel
+	public class GeneralExecuteSPModel
 	{
 		public bool IsValid { get; set; }
 		public string MsgError { get; set; } = string.Empty;

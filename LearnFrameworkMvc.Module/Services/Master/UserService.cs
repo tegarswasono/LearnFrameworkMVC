@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LearnFrameworkMvc.Module.Helpers;
 
 namespace LearnFrameworkMvc.Module.Services.Master
 {
@@ -16,8 +17,8 @@ namespace LearnFrameworkMvc.Module.Services.Master
 	{
 		Task<List<UserModel>> AllData(string sortColumn, string sortColumnDirection, int skip, int pageSize);
 		Task<int> CountAllData();
-		Task<UserModel?> ViewById(Guid id);
-		Task<List<FunctionModel>> GetAllModuleFunction(Guid? roleId);
+		Task<List<GeneralDatasourceModel>> GetRoles(Guid? userId);
+        Task<UserModel?> ViewById(Guid id);
 		Task CreateOrUpdate(CreateOrUpdateUserModel model);
 		Task DeleteById(Guid id);
 	}
@@ -55,6 +56,28 @@ namespace LearnFrameworkMvc.Module.Services.Master
 				throw new InvalidOperationException(ex.Message);
 			}
 		}
+		public async Task<List<GeneralDatasourceModel>> GetRoles(Guid? userId)
+		{
+			try
+			{
+                var param = new { userId };
+                string query = @"select Id as Value, Name as Text from TB_M_ROLE;";
+				if (userId != null && userId != Guid.Empty)
+				{
+					query = @"select 
+								a.Id as Value, a.Name as Text,
+								case when exists(select top 1 1 from tb_m_user_role where user_id = @userId and role_id = a.Id)
+								then 1 else 0 end
+								as Selected
+							from TB_M_ROLE a;";
+				}
+				var result = await _dbConnection.CreateConnection().QueryAsync<GeneralDatasourceModel>(query, param);
+				return result.ToList();
+			}catch(Exception ex)
+			{
+				throw new InvalidOperationException(ex.Message);
+			}
+		}
 		public async Task<UserModel?> ViewById(Guid id)
 		{
 			try
@@ -69,36 +92,11 @@ namespace LearnFrameworkMvc.Module.Services.Master
 				throw new InvalidOperationException(ex.Message);
 			}
 		}
-
-		public async Task<List<FunctionModel>> GetAllModuleFunction(Guid? roleId)
-		{
-			try
-			{
-				var param = new { roleId };
-				string query = @"SELECT * FROM TB_M_FUNCTION ORDER BY [ORDER];";
-				if (roleId != null && roleId != Guid.Empty)
-				{
-					query = @"SELECT 
-								A.*, 
-								ISCHECKED = 
-									CASE WHEN EXISTS(SELECT TOP 1 1 FROM TB_M_ROLE_FUNCTION WHERE ROLE_ID = @roleId AND FUNCTION_ID = A.ID) 
-									THEN 1 ELSE 0 END
-							FROM TB_M_FUNCTION A ORDER BY [ORDER];
-							";
-				}
-				var result = await _dbConnection.CreateConnection().QueryAsync<FunctionModel>(query, param);
-				return result.ToList();
-			}
-			catch (Exception ex)
-			{
-				throw new InvalidOperationException(ex.Message);
-			}
-		}
 		public async Task CreateOrUpdate(CreateOrUpdateUserModel model)
 		{
 			try
 			{
-				bool isValid = true;
+                bool isValid = true;
 				string msgError = string.Empty;
 				var param = new DynamicParameters();
 				param.Add("Id", model.Id);
@@ -107,7 +105,8 @@ namespace LearnFrameworkMvc.Module.Services.Master
 				param.Add("Email", model.Email);
 				param.Add("Telp1", model.Telp1);
 				param.Add("Description", model.Description);
-				param.Add("Is_Active", model.IsActive);
+				param.Add("Roles", model.Roles.ConvertListStringToString());
+                param.Add("Is_Active", model.IsActive);
 				param.Add("CreatedBy", "");
 				param.Add("IsValid", isValid, System.Data.DbType.Boolean, System.Data.ParameterDirection.Output);
 				param.Add("MsgError", msgError, System.Data.DbType.String, System.Data.ParameterDirection.Output);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LearnFrameworkMvc.Module.Models.Master.Function
 {
-	public class FunctionModel : BaseActionIdentity
+	public class FunctionModel : BaseIdentity
 	{
 		public string ID { get; set; } = string.Empty;
 		public string MODULE_ID { get; set; } = string.Empty;

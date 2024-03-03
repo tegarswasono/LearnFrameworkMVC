@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["Title"] = "User";
 }
+@section Css{
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+}
 <div class="app-page-title">
     <div class="page-title-wrapper">
         <div class="page-title-heading">
@@ -75,6 +78,12 @@
 							<div class="col-sm-10"><textarea name="description" id="description" class="form-control" placeholder="Description" style="resize:none" required="" maxlength="200"></textarea></div>
 						</div>
 						<div class="position-relative row form-group">
+							<label for="roles" class="col-sm-2 col-form-label">Roles</label>
+							<div class="col-sm-10">
+								<select id="roles" name="roles[]" multiple="multiple" style="width:100%"></select>
+							</div>
+						</div>
+						<div class="position-relative row form-group">
 							<label for="isActive" class="col-sm-2 col-form-label">Is Active</label>
 							<div class="col-sm-10">
 								<input type="checkbox" name="isActive" id="isActive" value="true" />
@@ -91,6 +100,14 @@
 	</div>
 }
 @section Scripts {
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#roles').select2({
+				placeholder: "Roles"
+			});
+		});
+	</script>
 	<script type="text/javascript">
 		$(function () {
 			var table = $('#table1').DataTable({
@@ -116,7 +133,7 @@
 				var row = $(this).closest('tr');
 				var id = table.row(row).data()["id"];
 
-				$('#modal1Title').text('View Role');
+				$('#modal1Title').text('View User');
 				$('#btnSave').hide();
 				$("#form1 :input").prop("disabled", true);
 				$("#btnClose").prop("disabled", false);
@@ -137,13 +154,15 @@
 						}
 					}
 				});
+
+				updateRolesOption(id);
 			});
 
 			$('#table1 tbody').on('click', '.btnEdit', function () {
 				var row = $(this).closest('tr');
 				var id = table.row(row).data()["id"];
 
-				$('#modal1Title').text('Edit Role');
+				$('#modal1Title').text('Edit User');
 				$('#btnSave').show();
 				$("#form1 :input").prop("disabled", false);
 
@@ -164,6 +183,8 @@
 						}
 					}
 				});
+
+				updateRolesOption(id);
 			});
 
 			$('#table1 tbody').on('click', '.btnDelete', function () {
@@ -193,12 +214,14 @@
 			});
 
 			$('#btnAdd').click(function () {
-				$('#modal1Title').text('Add Role');
+				$('#modal1Title').text('Add User');
 				$('#btnSave').show();
 				$("#form1 :input").prop("disabled", false);
 				$("#form1 :input").val('');
 				$('#isActive').prop("checked", true);
 				$('#isActive').val("true");
+
+				updateRolesOption(null);
 			});
 
 			$('#form1').submit(function (e) {
@@ -223,5 +246,17 @@
 				});
 			});
 		});
+		function updateRolesOption(userId){
+			 $("#roles").empty();
+			$.ajax({
+				type: "GET",
+				url: '@Url.Content("~/Users/GetRoles?userId=")' + userId,
+				success: function (data) {
+					$.each(data, function (index, data1) {
+						$("#roles").append(new Option(data1.text, data1.value));
+					});
+				}
+			});
+		}
 	</script>
 }
