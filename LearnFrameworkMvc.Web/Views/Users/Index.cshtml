@@ -34,7 +34,8 @@
                             <th>Fullname</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Telp</th>
+							<th>Telp</th>
+							<th>Roles</th>
                             <th>IsActive</th>
                         </tr>
                     </thead>
@@ -125,6 +126,7 @@
 					{ data: "username", name: "username" },
 					{ data: "email", name: "email" },
 					{ data: "telp1", name: "telp1" },
+					{ data: "roles", name: "roles" },
 					{ data: "is_Active", name: "is_Active" }
 				]
 			});
@@ -253,7 +255,9 @@
 				url: '@Url.Content("~/Users/GetRoles?userId=")' + userId,
 				success: function (data) {
 					$.each(data, function (index, data1) {
-						$("#roles").append(new Option(data1.text, data1.value));
+						let selected = "";
+						if (data1.selected) selected = "selected";
+						$("#roles").append("<option value='" + data1.value + "' " + selected + ">" + data1.text + "</option>");
 					});
 				}
 			});

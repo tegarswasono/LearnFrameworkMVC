@@ -35,7 +35,9 @@ namespace LearnFrameworkMvc.Module.Services.Master
 			try
 			{
 				var param = new { skip, pageSize };
-				string query = $"SELECT ID, USERNAME, EMAIL, FULLNAME, TELP1, DESCRIPTION, IS_ACTIVE FROM TB_M_USER ORDER BY {sortColumn} {sortColumnDirection} OFFSET @skip ROWS FETCH NEXT @pageSize ROWS ONLY;";
+				string query = $"SELECT ID, USERNAME, EMAIL, FULLNAME, TELP1, DESCRIPTION, IS_ACTIVE, " +
+					$"(select string_agg(name, ',') from TB_M_USER_ROLE a inner join TB_M_ROLE b on a.ROLE_ID = b.ID where a.USER_ID = a1.ID) as Roles " +
+					$"FROM TB_M_USER a1 ORDER BY {sortColumn} {sortColumnDirection} OFFSET @skip ROWS FETCH NEXT @pageSize ROWS ONLY;";
                 var result = await _dbConnection.CreateConnection().QueryAsync<UserModel>(query, param);
 				return result.ToList();
 			}
@@ -61,7 +63,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 			try
 			{
                 var param = new { userId };
-                string query = @"select Id as Value, Name as Text from TB_M_ROLE;";
+                string query = @"select Id as Value, Name as Text from TB_M_ROLE order by Name;";
 				if (userId != null && userId != Guid.Empty)
 				{
 					query = @"select 
@@ -69,7 +71,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 								case when exists(select top 1 1 from tb_m_user_role where user_id = @userId and role_id = a.Id)
 								then 1 else 0 end
 								as Selected
-							from TB_M_ROLE a;";
+							from TB_M_ROLE a order by a.Name;";
 				}
 				var result = await _dbConnection.CreateConnection().QueryAsync<GeneralDatasourceModel>(query, param);
 				return result.ToList();

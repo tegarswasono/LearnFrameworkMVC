@@ -55,13 +55,16 @@ BEGIN
 
 	--#02 UserRole
 	BEGIN
-		delete TB_M_USER_ROLE 
-		where USER_ID = @Id and 
-		ROLE_ID not in (select value from string_split(@Roles,','))
+		IF(@Roles != null and @Roles != '')
+		begin
+			delete TB_M_USER_ROLE 
+			where USER_ID = @Id and 
+			ROLE_ID not in (select value from string_split(@Roles,','))
 
-		insert into tb_m_user_role(USER_ID, ROLE_ID)
-		select @Id, value 
-		from string_split(@Roles,',') 
-		where value not in (select ROLE_ID from TB_M_USER_ROLE where USER_ID = @Id)
+			insert into tb_m_user_role(USER_ID, ROLE_ID)
+			select @Id, value 
+			from string_split(@Roles,',') 
+			where value not in (select ROLE_ID from TB_M_USER_ROLE where USER_ID = @Id)
+		end
 	END
 END
