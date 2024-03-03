@@ -14,4 +14,11 @@
     <ProjectReference Include="..\LearnFrameworkMvc.Module\LearnFrameworkMvc.Module.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Core\Controllers\" />
+    <Folder Include="Areas\Core\Views\" />
+    <Folder Include="Areas\Transaction\Controllers\" />
+    <Folder Include="Areas\Transaction\Views\" />
+  </ItemGroup>
+
 </Project>
