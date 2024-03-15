@@ -1,5 +1,7 @@
-﻿@{
-    string username = "Hi, Tegar Swasono";
+﻿@using System.Security.Claims
+@{
+    var claimEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+    string username = claimEmail;
     string datenow = DateTime.Now.ToString("dd MMM yyyy HH:mm");
 }
 <!doctype html>
