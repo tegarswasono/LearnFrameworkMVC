@@ -1,15 +1,31 @@
 using LearnFrameworkMvc.Module.Repositories;
 using LearnFrameworkMvc.Module.Services;
 using LearnFrameworkMvc.Module.Services.Master;
+using LearnFrameworkMvc.Web;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        options.SlidingExpiration = true;
+        options.LoginPath = "/Login";
+    });
+
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IDapperDbConnection, DapperDbConnection>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+
 
 var app = builder.Build();
 
@@ -25,12 +41,17 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+var cookiePolicyOptions = new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Strict,
+};
+app.UseCookiePolicy(cookiePolicyOptions);
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "areas",

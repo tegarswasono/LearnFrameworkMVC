@@ -55,7 +55,11 @@ BEGIN
 
 	--#02 UserRole
 	BEGIN
-		IF(@Roles != null and @Roles != '')
+		if(@Roles = null or @Roles = '')
+		begin
+			delete TB_M_USER_ROLE where USER_ID = @Id
+		end
+		else
 		begin
 			delete TB_M_USER_ROLE 
 			where USER_ID = @Id and 

@@ -1,9 +1,12 @@
 using LearnFrameworkMvc.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace LearnFrameworkMvc.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,6 +18,10 @@ namespace LearnFrameworkMvc.Web.Controllers
 
         public IActionResult Index()
         {
+            string email = User.FindFirst(ClaimTypes.Email)!.Value;
+            string fullname = User.FindFirst("Fullname")!.Value;
+            string role = User.FindFirst(ClaimTypes.Role)!.Value;
+
             return View();
         }
 
