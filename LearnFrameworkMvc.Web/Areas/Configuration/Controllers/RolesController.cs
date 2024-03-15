@@ -4,13 +4,12 @@ using LearnFrameworkMvc.Module.Services;
 using LearnFrameworkMvc.Module.Services.Master;
 using Microsoft.AspNetCore.Mvc;
 using LearnFrameworkMvc.Module;
-using LearnFrameworkMvc.Module.Models.Core;
-using LearnFrameworkMvc.Module.Models.Master.Function;
 using Microsoft.AspNetCore.Authorization;
+using LearnFrameworkMvc.Module.Models;
 
 namespace LearnFrameworkMvc.Areas.Configuration.Controllers
 {
-	[Authorize]
+    [Authorize]
 	[Area("Configuration")]
 	public class RolesController : Controller
     {

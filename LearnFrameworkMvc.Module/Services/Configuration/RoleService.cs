@@ -1,7 +1,5 @@
 ﻿using Dapper;
 using LearnFrameworkMvc.Module.Models;
-using LearnFrameworkMvc.Module.Models.Core;
-using LearnFrameworkMvc.Module.Models.Master.Function;
 using LearnFrameworkMvc.Module.Models.Master.Role;
 using System;
 using System.Collections.Generic;
@@ -11,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LearnFrameworkMvc.Module.Services.Master
 {
-	public interface IRoleService
+    public interface IRoleService
 	{
 		Task<List<RoleModel>> AllData(string sortColumn, string sortColumnDirection, int skip, int pageSize);
 		Task<int> CountAllData();

@@ -1,7 +1,5 @@
 ﻿using Dapper;
 using LearnFrameworkMvc.Module.Models;
-using LearnFrameworkMvc.Module.Models.Core;
-using LearnFrameworkMvc.Module.Models.Master.Function;
 using LearnFrameworkMvc.Module.Models.Master.Role;
 using LearnFrameworkMvc.Module.Models.Master.User;
 using System;

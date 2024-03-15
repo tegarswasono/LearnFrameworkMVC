@@ -1,4 +1,3 @@
-using LearnFrameworkMvc.Module.Repositories;
 using LearnFrameworkMvc.Module.Services;
 using LearnFrameworkMvc.Module.Services.Master;
 using LearnFrameworkMvc.Web;
@@ -21,7 +20,6 @@ builder.Services.AddScoped<IDapperDbConnection, DapperDbConnection>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 
 

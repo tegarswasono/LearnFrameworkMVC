@@ -1,4 +1,4 @@
-﻿using LearnFrameworkMvc.Module.Models.Core;
+﻿using LearnFrameworkMvc.Module.Models;
 
 namespace LearnFrameworkMvc.Module
 {
