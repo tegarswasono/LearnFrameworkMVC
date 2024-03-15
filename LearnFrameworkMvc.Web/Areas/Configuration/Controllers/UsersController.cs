@@ -5,10 +5,13 @@ using LearnFrameworkMvc.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using LearnFrameworkMvc.Module.Models.Master.User;
+using Microsoft.AspNetCore.Authorization;
 
-namespace LearnFrameworkMvc.Web.Controllers
+namespace LearnFrameworkMvc.Areas.Configuration.Controllers
 {
-    public class UsersController : Controller
+	[Authorize]
+	[Area("Configuration")]
+	public class UsersController : Controller
     {
         private readonly ILogger<UsersController> _logger;
         private readonly IUserService _userService;

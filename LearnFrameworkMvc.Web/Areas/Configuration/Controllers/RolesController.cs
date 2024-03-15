@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using LearnFrameworkMvc.Module;
 using LearnFrameworkMvc.Module.Models.Core;
 using LearnFrameworkMvc.Module.Models.Master.Function;
+using Microsoft.AspNetCore.Authorization;
 
-namespace LearnFrameworkMvc.Web.Controllers
+namespace LearnFrameworkMvc.Areas.Configuration.Controllers
 {
-    public class RolesController : Controller
+	[Authorize]
+	[Area("Configuration")]
+	public class RolesController : Controller
     {
         private readonly ILogger<RolesController> _logger;
         private readonly IDapperDbConnection _dbConnection;

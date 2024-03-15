@@ -1,14 +1,17 @@
 using LearnFrameworkMvc.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace LearnFrameworkMvc.Web.Controllers
+namespace LearnFrameworkMvc.Areas.Configuration.Controllers
 {
-    public class SMTPSettingController : Controller
+    [Authorize]
+    [Area("Configuration")]
+    public class MyProfileController : Controller
     {
         private readonly ILogger<MyProfileController> _logger;
 
-        public SMTPSettingController(ILogger<MyProfileController> logger)
+        public MyProfileController(ILogger<MyProfileController> logger)
         {
             _logger = logger;
         }

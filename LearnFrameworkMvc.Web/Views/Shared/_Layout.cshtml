@@ -1,4 +1,8 @@
-﻿<!doctype html>
+﻿@{
+    string username = "Hi, Tegar Swasono";
+    string datenow = DateTime.Now.ToString("dd MMM yyyy HH:mm");
+}
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -57,21 +61,21 @@
                                 <div class="widget-content-left">
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="assets/images/avatars/1.png" alt>
+                                            <img width="42" class="rounded-circle" src="@Url.Content("~/assets/images/avatars/1.png")" alt>
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                            <a href="@Url.Content("~/MyProfile")" tabindex="0" class="dropdown-item">My Profile</a>
+                                            <a href="@Url.Content("~/Configuration/MyProfile")" tabindex="0" class="dropdown-item">My Profile</a>
                                             <a href="@Url.Content("~/Login/Logout")" tabindex="0" class="dropdown-item">Logout</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        Alina Mclourd
+                                        @username
                                     </div>
                                     <div class="widget-subheading">
-                                        VP People Manager
+                                        @datenow
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +127,7 @@
                             </li>
                             <li class="app-sidebar__heading">Transactions</li>
                             <li>
-                                <a href="@Url.Content("~/Bookings")">
+                                <a href="@Url.Content("~/Transaction/Bookings")">
                                     <i class="metismenu-icon pe-7s-note2"></i>Bookings
                                 </a>
                             </li>
@@ -135,12 +139,12 @@
                                 </a>
                                 <ul class="">
                                     <li>
-                                        <a href="@Url.Content("~/Products")" class="">
+                                        <a href="@Url.Content("~/Master/Products")" class="">
                                             <i class="metismenu-icon"></i>Products
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Content("~/Categories")">
+                                        <a href="@Url.Content("~/Master/Categories")">
                                             <i class="metismenu-icon"></i>Categories
                                         </a>
                                     </li>
@@ -153,29 +157,29 @@
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="@Url.Content("~/Users")" class="">
+                                        <a href="@Url.Content("~/Configuration/Users")" class="">
                                             <i class="metismenu-icon"></i>Users
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Content("~/Roles")">
+                                        <a href="@Url.Content("~/Configuration/Roles")">
                                             <i class="metismenu-icon"></i>Roles
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Content("~/SystemConfiguration")">
+                                        <a href="@Url.Content("~/Configuration/SystemConfiguration")">
                                             <i class="metismenu-icon"></i>System Configuration
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Content("~/SMTPSetting")">
+                                        <a href="@Url.Content("~/Configuration/SMTPSetting")">
                                             <i class="metismenu-icon"></i>SMTP Setting
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="@Url.Content("~/MyProfile")">
+                                <a href="@Url.Content("~/Configuration/MyProfile")">
                                     <i class="metismenu-icon pe-7s-user"></i>
                                     My Profile
                                 </a>

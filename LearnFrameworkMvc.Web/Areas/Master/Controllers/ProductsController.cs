@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace LearnFrameworkMvc.Web.Controllers
+namespace LearnFrameworkMvc.Areas.Master.Controllers
 {
     [Authorize]
-    public class BookingsController : Controller
+    [Area("Master")]
+    public class ProductsController : Controller
     {
-        private readonly ILogger<BookingsController> _logger;
+        private readonly ILogger<ProductsController> _logger;
 
-        public BookingsController(ILogger<BookingsController> logger)
+        public ProductsController(ILogger<ProductsController> logger)
         {
             _logger = logger;
         }
