@@ -13,8 +13,9 @@ namespace LearnFrameworkMvc.Module
                 .GetFields()
                 .Select(x => new ModuleFunctionModel 
                 { 
-                    Id = x.Name, 
-                    IdText = x.GetValue(null)?.ToString(),
+                    //Id = x.Name, 
+                    Id = x.GetValue(null)?.ToString(),
+					IdText = x.GetValue(null)?.ToString(),
                     Module = x.GetValue(null)?.ToString()?.Split(".")[0],
                     FunctionName = x.GetValue(null)?.ToString()?.Split(".")[1],
                     Order = a++
