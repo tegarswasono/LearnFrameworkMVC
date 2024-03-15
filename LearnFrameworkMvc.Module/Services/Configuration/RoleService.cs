@@ -72,7 +72,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 			try
 			{
 				var param = new { roleId };
-				string query = @"SELECT * FROM TB_M_FUNCTION ORDER BY [ORDER];";
+				string query = @"SELECT * FROM TB_M_FUNCTION ORDER BY [MODULE_ID],[ORDER];";
 				if (roleId != null && roleId != Guid.Empty)
 				{
 					query = @"SELECT 
@@ -80,7 +80,7 @@ namespace LearnFrameworkMvc.Module.Services.Master
 								ISCHECKED = 
 									CASE WHEN EXISTS(SELECT TOP 1 1 FROM TB_M_ROLE_FUNCTION WHERE ROLE_ID = @roleId AND FUNCTION_ID = A.ID) 
 									THEN 1 ELSE 0 END
-							FROM TB_M_FUNCTION A ORDER BY [ORDER];
+							FROM TB_M_FUNCTION A ORDER BY [MODULE_ID],[ORDER];
 							";
 				}
 				var result = await _dbConnection.CreateConnection().QueryAsync<FunctionModel>(query, param);

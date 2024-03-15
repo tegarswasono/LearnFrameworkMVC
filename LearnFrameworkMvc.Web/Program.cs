@@ -51,7 +51,6 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "areas",
-    pattern: "{area=Core}/{controller=Default}/{action=Index}"
+    pattern: "{area=Transaction}/{controller=Bookings}/{action=Index}/{id?}"
     );
-
 app.Run();

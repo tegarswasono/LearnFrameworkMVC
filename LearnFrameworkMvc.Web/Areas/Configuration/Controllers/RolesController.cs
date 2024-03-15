@@ -86,8 +86,8 @@ namespace LearnFrameworkMvc.Areas.Configuration.Controllers
 				return Json(null);
 			}
 		}
-
-		public async Task<IActionResult> GetById(Guid id)
+		
+		public async Task<ActionResult> GetById(Guid id)
         {
 			try
 			{

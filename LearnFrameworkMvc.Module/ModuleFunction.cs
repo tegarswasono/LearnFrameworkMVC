@@ -23,21 +23,28 @@ namespace LearnFrameworkMvc.Module
             return result;
         }
 
-        //Master
-        public const string CategoryView = "Category.View";
-        public const string CategoryAdd = "Category.Add";
-        public const string CategoryEdit = "Category.Edit";
-        public const string CategoryDelete = "Category.Delete";
-        public const string CategorySearch = "Category.Search";
-        public const string CategoryDownload = "Category.Download";
-        public const string CategoryUpload = "Category.Upload";
+		public const string BookingsView = "Bookings.View";
 
-        public const string ProductView = "Product.View";
-        public const string ProductAdd = "Product.Add";
-        public const string ProductEdit = "Product.Edit";
-        public const string ProductDelete = "Product.Delete";
-        public const string ProductSearch = "Product.Search";
-        public const string ProductDownload = "Product.Download";
-        public const string ProductUpload = "Product.Upload";
-    }
+		public const string CategoryView = "Category.View";
+		public const string CategoryAdd = "Category.Add";
+		public const string CategoryEdit = "Category.Edit";
+		public const string CategoryDelete = "Category.Delete";
+		public const string CategorySearch = "Category.Search";
+		public const string CategoryDownload = "Category.Download";
+		public const string CategoryUpload = "Category.Upload";
+
+		public const string ProductView = "Product.View";
+		public const string ProductAdd = "Product.Add";
+		public const string ProductEdit = "Product.Edit";
+		public const string ProductDelete = "Product.Delete";
+		public const string ProductSearch = "Product.Search";
+		public const string ProductDownload = "Product.Download";
+		public const string ProductUpload = "Product.Upload";
+
+		public const string RolesView = "Roles.View";
+        public const string SMTPSettingView = "SMTPSetting.View";
+        public const string SystemConfigurationView = "SystemConfiguration.View";
+        public const string UsersView = "Users.View";
+
+	}
 }
