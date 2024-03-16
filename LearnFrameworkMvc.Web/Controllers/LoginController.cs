@@ -53,6 +53,7 @@ namespace LearnFrameworkMvc.Web.Controllers
 
             var claims = new List<Claim>
             {
+                new("Id", user.Id.ToString()),
                 new(ClaimTypes.Email, user.Email),
                 new("FullName", user.Fullname),
                 new(ClaimTypes.Role, user.Roles)

@@ -1,8 +1,15 @@
 ﻿@using System.Security.Claims
+@using LearnFrameworkMvc.Module.Models.System
+@using LearnFrameworkMvc.Module.Services
+@using System.Linq;
+@inject PermissionService permissionService;
 @{
-    var claimEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-    string username = claimEmail;
+    string claimEmail = User.FindFirst(ClaimTypes.Email)!.Value;
+    string claimId = User.FindFirst("Id")!.Value;
     string datenow = DateTime.Now.ToString("dd MMM yyyy HH:mm");
+
+    List<TbmMenuModel> menus = await permissionService.GetMenu(claimId);
+    var requestPath = Context.Request.Path;
 }
 <!doctype html>
 <html lang="en">
@@ -74,7 +81,7 @@
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        @username
+                                        @claimEmail
                                     </div>
                                     <div class="widget-subheading">
                                         @datenow
@@ -121,71 +128,73 @@
                 <div class="scrollbar-sidebar">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
+                            @{
+                                string homeActive = "";
+                                if (requestPath == "/Home")
+                                {
+                                    homeActive = "mm-active";
+                                }
+                            }
                             <li class="app-sidebar__heading">Home</li>
                             <li>
-                                <a href="@Url.Content("~/Home")" class="mm-active">
+                                <a href="@Url.Content("~/Home")" class="@homeActive">
                                     <i class="metismenu-icon pe-7s-home"></i>Home
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Transactions</li>
-                            <li>
-                                <a href="@Url.Content("~/Transaction/Bookings")">
-                                    <i class="metismenu-icon pe-7s-note2"></i>Bookings
-                                </a>
-                            </li>
-                            <li class="app-sidebar__heading">Masters</li>
-                            <li class="">
-                                <a href="#">
-                                    <i class="metismenu-icon pe-7s-notebook"></i>Master
-                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                </a>
-                                <ul class="">
+                            @{
+                                string lastSection = "";
+                            }
+                            @foreach(var data in menus){
+                                string active = "";
+                                if (data.Url.Contains(requestPath))
+                                {
+                                    active = "mm-active";
+                                }
+
+                                if (data.Section != lastSection)
+                                {
+                                    <li class="app-sidebar__heading">@data.Section</li>
+                                    lastSection = data.Section;
+                                }
+                                if (!string.IsNullOrEmpty(data.Url) && data.ParentId == null)
+                                {
                                     <li>
-                                        <a href="@Url.Content("~/Master/Products")" class="">
-                                            <i class="metismenu-icon"></i>Products
+                                        <a href="@Url.Content(data.Url)" class="@active">
+                                            <i class="metismenu-icon @data.IconClass"></i>@data.Title
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="@Url.Content("~/Master/Categories")">
-                                            <i class="metismenu-icon"></i>Categories
+                                }
+                                else if(string.IsNullOrEmpty(data.Url) && data.ParentId == null && menus.Exists(x=>x.ParentId == data.Id))
+                                {
+                                    string parentActive = "";
+                                    if (menus.Exists(x => x.ParentId == data.Id && x.Url.Contains(requestPath)))
+                                    {
+                                        parentActive = "mm-active";
+                                    }
+
+                                    <li class="@parentActive">
+                                        <a href="#">
+                                            <i class="metismenu-icon @data.IconClass"></i>@data.Title
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                         </a>
+                                        <ul class="">
+                                            @foreach(var data1 in menus.Where(x=>x.ParentId == data.Id))
+                                            {
+                                                active = "";
+                                                if (data1.Url.Contains(requestPath))
+                                                {
+                                                    active = "mm-active";
+                                                }
+                                                <li>
+                                                    <a href="@Url.Content(data1.Url)" class="@active">
+                                                        <i class="metismenu-icon"></i>@data1.Title
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
                                     </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="metismenu-icon pe-7s-config"></i>Configuration
-                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="@Url.Content("~/Configuration/Users")" class="">
-                                            <i class="metismenu-icon"></i>Users
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Content("~/Configuration/Roles")">
-                                            <i class="metismenu-icon"></i>Roles
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Content("~/Configuration/SystemConfiguration")">
-                                            <i class="metismenu-icon"></i>System Configuration
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Content("~/Configuration/SMTPSetting")">
-                                            <i class="metismenu-icon"></i>SMTP Setting
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="@Url.Content("~/Configuration/MyProfile")">
-                                    <i class="metismenu-icon pe-7s-user"></i>
-                                    My Profile
-                                </a>
-                            </li>
+                                }
+                            }
                         </ul>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 using LearnFrameworkMvc.Module.Helpers;
 using LearnFrameworkMvc.Module.Models.Login;
 using LearnFrameworkMvc.Module.Models.Master.User;
+using LearnFrameworkMvc.Module.Models.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace LearnFrameworkMvc.Module.Services
     public interface IPermissionService
     {
         Task<UserModel?> IsAuthenticate(LoginModel model);
+        Task<List<TbmMenuModel>> GetMenu(string userId);
     }
     public class PermissionService : IPermissionService
     {
@@ -33,6 +35,20 @@ namespace LearnFrameworkMvc.Module.Services
 
             var result = await _dbConnection.CreateConnection().QueryAsync<UserModel>(query, param);
             return result.FirstOrDefault();
+        }
+        public async Task<List<TbmMenuModel>> GetMenu(string userId)
+        {
+            string query = @"select * from tb_m_menu 
+                            where FunctionId in 
+                            (select a.FUNCTION_ID from TB_M_ROLE_FUNCTION a
+                            inner join TB_M_USER_ROLE b on a.ROLE_ID = b.ROLE_ID
+                            where b.USER_ID = @userId
+                            group by a.FUNCTION_ID) or FunctionId = ''
+                            order by orderindex;";
+            var param = new { userId };
+
+            var result = await _dbConnection.CreateConnection().QueryAsync<TbmMenuModel>(query, param);
+            return result.ToList();
         }
     }
 }

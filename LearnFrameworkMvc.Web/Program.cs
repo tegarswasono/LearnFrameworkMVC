@@ -18,6 +18,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IDapperDbConnection, DapperDbConnection>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddTransient<PermissionService>();
+
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
