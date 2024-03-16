@@ -43,9 +43,19 @@ namespace LearnFrameworkMvc.Module
 		public const string ProductUpload = "Product.Upload";
 
 		public const string RolesView = "Roles.View";
-        public const string SMTPSettingView = "SMTPSetting.View";
-        public const string SystemConfigurationView = "SystemConfiguration.View";
-        public const string UsersView = "Users.View";
+		public const string RolesAdd = "Roles.Add";
+		public const string RolesEdit = "Roles.Edit";
+		public const string RolesDelete = "Roles.Delete";
 
-	}
+        public const string SMTPSettingView = "SMTPSetting.View";
+        public const string SMTPSettingCreateOrUpdate = "SMTPSetting.CreateOrUpdate";
+        public const string SystemConfigurationView = "SystemConfiguration.View";
+        public const string SystemConfigurationCreateOrUpdate = "SystemConfiguration.CreateOrUpdate";
+
+        public const string UsersView = "Users.View";
+        public const string UsersAdd = "Users.Add";
+        public const string UsersEdit = "Users.Edit";
+        public const string UsersDelete = "Users.Delete";
+
+    }
 }

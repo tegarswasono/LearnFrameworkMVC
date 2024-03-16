@@ -1,3 +1,5 @@
+using LearnFrameworkMvc.Module;
+using LearnFrameworkMvc.Web;
 using LearnFrameworkMvc.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +9,7 @@ namespace LearnFrameworkMvc.Areas.Transaction.Controllers
 {
     [Authorize]
     [Area("Transaction")]
+    [AppAuthorize(ModuleFunction.BookingsView)]
     public class BookingsController : Controller
     {
         private readonly ILogger<BookingsController> _logger;

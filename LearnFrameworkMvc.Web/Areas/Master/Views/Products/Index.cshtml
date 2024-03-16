@@ -1,7 +1,14 @@
-﻿@{
+﻿@using LearnFrameworkMvc.Module.Services
+@using LearnFrameworkMvc.Module
+@inject PermissionService permissionService;
+@{
     string title = "Products";
     string icon = "pe-7s-notebook";
     ViewData["Title"] = title;
+
+    string claimId = User.FindFirst("Id")!.Value;
+
+
 }
 <div class="app-page-title">
     <div class="page-title-wrapper">
@@ -21,6 +28,25 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <h2>@title</h2>
+        <p>
+            Checklist Permission: <br/>
+            @if (@permissionService.HasPermission(claimId, ModuleFunction.ProductView))
+            {
+                <button>View</button>
+            }
+            @if (@permissionService.HasPermission(claimId, ModuleFunction.ProductAdd))
+            {
+                <button>Add</button>
+            }
+            @if (@permissionService.HasPermission(claimId, ModuleFunction.ProductEdit))
+            {
+                <button>Edit</button>
+            }
+            @if (@permissionService.HasPermission(claimId, ModuleFunction.ProductDelete))
+            {
+                <button>Delete</button>
+            }
+            
+        </p>
     </div>
 </div>

@@ -14,6 +14,7 @@ namespace LearnFrameworkMvc.Module.Services
     public interface IPermissionService
     {
         Task<UserModel?> IsAuthenticate(LoginModel model);
+        bool HasPermission(string userId, string functionId);
         Task<List<TbmMenuModel>> GetMenu(string userId);
     }
     public class PermissionService : IPermissionService
@@ -34,6 +35,23 @@ namespace LearnFrameworkMvc.Module.Services
                 $"FROM TB_M_USER a1 where a1.EMAIL = @email and a1.PASSWORD = @passwordHashed;";
 
             var result = await _dbConnection.CreateConnection().QueryAsync<UserModel>(query, param);
+            return result.FirstOrDefault();
+        }
+        public bool HasPermission(string userId, string functionId)
+        {
+            string query = @"SELECT
+                                CASE WHEN EXISTS 
+                                (
+                                    select a.* from TB_M_ROLE_FUNCTION a
+		                            inner join TB_M_USER_ROLE b on a.ROLE_ID = b.ROLE_ID
+		                            where b.USER_ID = @userId and a.FUNCTION_ID = @functionId
+                                )
+                                THEN 1
+                                ELSE 0
+                            END
+                            ";
+            var param = new { userId, functionId };
+            var result = _dbConnection.CreateConnection().Query<bool>(query, param);
             return result.FirstOrDefault();
         }
         public async Task<List<TbmMenuModel>> GetMenu(string userId)

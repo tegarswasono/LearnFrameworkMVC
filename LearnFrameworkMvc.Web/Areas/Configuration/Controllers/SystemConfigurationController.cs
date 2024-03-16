@@ -1,3 +1,5 @@
+using LearnFrameworkMvc.Module;
+using LearnFrameworkMvc.Web;
 using LearnFrameworkMvc.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +9,8 @@ namespace LearnFrameworkMvc.Areas.Configuration.Controllers
 {
 	[Authorize]
 	[Area("Configuration")]
-	public class SystemConfigurationController : Controller
+    [AppAuthorize(ModuleFunction.SystemConfigurationView)]
+    public class SystemConfigurationController : Controller
     {
         private readonly ILogger<SystemConfigurationController> _logger;
 

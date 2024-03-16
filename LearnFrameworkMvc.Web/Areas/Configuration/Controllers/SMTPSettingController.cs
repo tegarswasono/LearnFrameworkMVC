@@ -1,3 +1,5 @@
+using LearnFrameworkMvc.Module;
+using LearnFrameworkMvc.Web;
 using LearnFrameworkMvc.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +9,8 @@ namespace LearnFrameworkMvc.Areas.Configuration.Controllers
 {
 	[Authorize]
 	[Area("Configuration")]
-	public class SMTPSettingController : Controller
+    [AppAuthorize(ModuleFunction.SMTPSettingView)]
+    public class SMTPSettingController : Controller
     {
         public SMTPSettingController()
         {

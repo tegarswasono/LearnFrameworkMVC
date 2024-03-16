@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using LearnFrameworkMvc.Module;
 using Microsoft.AspNetCore.Authorization;
 using LearnFrameworkMvc.Module.Models;
+using LearnFrameworkMvc.Web;
 
 namespace LearnFrameworkMvc.Areas.Configuration.Controllers
 {
     [Authorize]
 	[Area("Configuration")]
+	[AppAuthorize(ModuleFunction.RolesView)]
 	public class RolesController : Controller
     {
         private readonly ILogger<RolesController> _logger;
